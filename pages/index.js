@@ -4,10 +4,8 @@ import Login from '@/components/Login';
 import Right from '@/components/Right';
 import FirebaseAuthContext from '@/utils/firebaseAuth';
 import React, { useContext } from 'react'
-
 function Home() {
     const { user } = useContext(FirebaseAuthContext);
-    console.log(typeof user);
     return (
       <>
         {user !== null ? (
