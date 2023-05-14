@@ -21,7 +21,7 @@ function Login() {
           >
             <FcGoogle size={40} />
             <h2 className="text-center text-xl text-thirdColor font-display font-semibold ">
-              Sign In With Google test{" "}
+              Sign In With Google
             </h2>
           </button>
         </div>
