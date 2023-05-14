@@ -14,7 +14,7 @@ export const FirebaseAuthProvider = ({ children }) => {
 
     return unsubscribe;
   }, []);
-
+  
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
@@ -25,8 +25,9 @@ export const FirebaseAuthProvider = ({ children }) => {
         let stringified = JSON.stringify(user)
         console.log(user);
         setUser(user)
+        
         // setLoggedInUserId(user.uid);
-        // let storeUserData = localStorage.setItem('userInfo', stringified);
+         let storeUserData = localStorage.setItem('user', stringified);
         // ...
     }).catch((error) => {
         // Handle Errors here.
@@ -44,12 +45,27 @@ export const FirebaseAuthProvider = ({ children }) => {
   const signOut = async () => {
     try {
       await auth.signOut();
+      let remove = localStorage.removeItem('user')
       console.log("Signout");
     } catch (error) {
       console.log(error);
     }
   };
 
+  const checkIfUserIsLoggedIn = async () =>{
+    try{
+        const value = await localStorage.getItem('user');
+        if(value){
+            setUser(JSON.parse(value))
+        }
+    }
+    catch{
+  
+    }
+  }
+  useEffect(()=>{
+    checkIfUserIsLoggedIn()
+  },[])
   return (
     <FirebaseAuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
       {children}

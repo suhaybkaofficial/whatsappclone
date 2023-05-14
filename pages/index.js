@@ -7,7 +7,7 @@ import React, { useContext } from 'react'
 
 function Home() {
     const { user } = useContext(FirebaseAuthContext);
-    console.log(user);
+    console.log(typeof user);
     return (
       <>
         {user !== null ? (
