@@ -3,7 +3,7 @@ import ChatList from "./ChatList";
 
 function Chats() {
   return (
-    <div className="mx-4" id="sidebar">
+    <div className="mx-4 " id="sidebar">
       {/* Chat */}
       <ChatList contactName="Suhaib Hassan" message="Hi From " messageCount="3"  time="7:20Am"/>
       <ChatList contactName="Najib Said"  message="Hi From " messageCount="1" time="1:30Am"/>

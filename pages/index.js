@@ -5,7 +5,7 @@ import Right from '@/components/Right';
 import FirebaseAuthContext from '@/utils/firebaseAuth';
 import React, { useContext } from 'react'
 function Home() {
-    const { user } = useContext(FirebaseAuthContext);
+    const { user,showChats } = useContext(FirebaseAuthContext);
     return (
       <>
         {user !== null ? (
@@ -15,11 +15,11 @@ function Home() {
               <div className="fixed top-0 left-0 z-40 w-full">
                 <Header />
               </div>
-              <div className="flex h-full ">
-                <div className="flex-[1_1_0%] ">
+              <div className="h-full min-h-screen flex">
+                <div className={showChats ? "flex-[1_1_0%]" : "flex-[1_1_0%] hidden md:flex"}>
                   <Left />
                 </div>
-                <div className="flex-[3_3_0%]">
+                <div className="flex-[3_3_0%]  overflow-y-auto">
                   <Right />
                 </div>
               </div>

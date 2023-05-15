@@ -6,7 +6,8 @@ const FirebaseAuthContext = createContext();
 
 export const FirebaseAuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
+  const [isChatClicked,setIsChatClicked] = useState(true)
+  const [showChats,setShowChats] = useState(false)
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
@@ -40,7 +41,9 @@ export const FirebaseAuthProvider = ({ children }) => {
         // ...
     });
   };
-
+  const openDrawer = ()=>{
+    setShowChats(!showChats);
+  }
   const signOut = async () => {
     try {
       await auth.signOut();
@@ -51,7 +54,16 @@ export const FirebaseAuthProvider = ({ children }) => {
   };
 
   return (
-    <FirebaseAuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
+    <FirebaseAuthContext.Provider value={{ 
+      user, 
+      signInWithGoogle, 
+      signOut,
+      isChatClicked,
+      setIsChatClicked,
+      showChats,
+      setShowChats,
+      openDrawer
+      }}>
       {children}
     </FirebaseAuthContext.Provider>
   );
