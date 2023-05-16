@@ -5,13 +5,13 @@ import Image from "next/image";
 import { AiFillLock } from "react-icons/ai";
 import FirebaseAuthContext from "@/utils/firebaseAuth";
 function Right() {
-  const { isChatClicked } = useContext(FirebaseAuthContext);
+  const { isChatClicked,chatSelected } = useContext(FirebaseAuthContext);
 
   return (
     <>
       {!isChatClicked ? (
         <>
-          <div className="flex items-center justify-center h-full bg-primaryColor relative">
+          <div className="flex items-center justify-center h-full bg-primaryColor relative ">
             <div className="flex items-center justify-center flex-col">
               <Image
                 src="/images/background2.jpg"
@@ -44,7 +44,7 @@ function Right() {
              <div className="flex justify-start">
                <div className="bg-primaryColor max-w-fit py-1 px-2 rounded-lg  my-4 ">
                 <p className="text-white text-left whitespace-normal break-words px-4 py-4  ">
-                  How are you today?
+                  {chatSelected.chatName}
                 </p>
               </div>
               </div>

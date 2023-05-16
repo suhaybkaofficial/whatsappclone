@@ -6,11 +6,13 @@ import Chats from "./Chats";
 function Left() {
   return (
     <div className="h-full bg-greyColor border-r border-r-gray-700 relative">
-  <br /><br /><br />
+      <br />
+      <br />
+      <br />
       {/* Search */}
       <Search />
       {/* Chats */}
-       <Chats />
+      <Chats />
     </div>
   );
 }

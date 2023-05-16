@@ -3,22 +3,35 @@ import React, { useContext, useState } from "react";
 import { BiMessageSquareAdd } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Image from "next/image";
-import { FaSignOutAlt,FaThList } from "react-icons/fa";
+import { FaSignOutAlt, FaThList } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
+import { HiOutlineUsers } from "react-icons/hi";
 import FirebaseAuthContext from "@/utils/firebaseAuth";
 function Header() {
-  const { signOut, user, isChatClicked,showChats,setShowChats,openDrawer,setIsChatClicked } = useContext(FirebaseAuthContext);
+  const {
+    signOut,
+    user,
+    isChatClicked,
+    showChats,
+    setShowChats,
+    openDrawer,
+    setIsChatClicked,
+    isCreateChat,
+    setIsCreateChat,
+    setChatSelected,
+    closeChat
+  } = useContext(FirebaseAuthContext);
   const [show, setShow] = useState(false);
 
   const showMore = () => {
     setShow(!show);
-    console.log(show);
   };
-  const closeChat = ()=>{
-    setIsChatClicked(false)
-  }
-  
+ 
+  const createChat = () => {
+    setIsCreateChat(true);
+  };
+  console.log(isChatClicked.toString());
   return (
     <div className="flex items-center  ">
       {/* Left Header*/}
@@ -35,26 +48,40 @@ function Header() {
           </div>
           <h1>{user.displayName} </h1>
         </div>
-        <div className="flex items-center space-x-2">
-          <BiMessageSquareAdd size={20} className="cursor-pointer" />
-          <BsThreeDotsVertical size={20} className="cursor-pointer" onClick={showMore}/>
+        {/* {
+          isChatClicked
+        } */}
+        <div className="flex items-center space-x-6">
+          <button onClick={createChat}>
+            <BiMessageSquareAdd size={20} className="cursor-pointer" />
+          </button>
+          {isChatClicked && (
+            <button>
+              <HiOutlineUsers />
+            </button>
+          )}
+          <BsThreeDotsVertical
+            size={20}
+            className="cursor-pointer"
+            onClick={showMore}
+          />
         </div>
         {show && (
           <div
             className="absolute right-0 top-16
                  w-40 bg-gray-300 hover:bg-gray-100 rounded-md shadow-lg"
           >
-           {isChatClicked && (
-            <div className="py-1">
-              <button
-                onClick={closeChat}
-                className=" px-4 py-2 text-gray-700   flex items-center w-full "
-              >
-                <AiOutlineClose className="mr-2" />
-                Close chat
-              </button>
-            </div>
-           )}
+            {isChatClicked && (
+              <div className="py-1">
+                <button
+                  onClick={()=>{closeChat}}
+                  className=" px-4 py-2 text-gray-700   flex items-center w-full "
+                >
+                  <AiOutlineClose className="mr-2" />
+                  Close chat
+                </button>
+              </div>
+            )}
             <div className="py-1">
               <button
                 onClick={signOut}
@@ -68,14 +95,25 @@ function Header() {
         )}
       </div>
       {/* Drop Down */}
-      <div  className="min-h-[70px] bg-primaryColor  flex md:hidden cursor-pointer  flex-grow px-4 relative" >
-        <div onClick={openDrawer} className={showChats ? "items-center  space-x-4 min-h-[70px] bg-primaryColor  flex md:hidden cursor-pointer  flex-grow px-4 relative":"items-center space-x-4 min-h-[70px] bg-primaryColor  flex md:hidden cursor-pointer  flex-grow px-4 relative"}>
-        <FaThList />
-        <h1>Chats</h1>
+      <div className="min-h-[70px] bg-primaryColor  flex md:hidden cursor-pointer  flex-grow px-4 relative">
+        <div
+          onClick={openDrawer}
+          className={
+            showChats
+              ? "items-center  space-x-4 min-h-[70px] bg-primaryColor  flex md:hidden cursor-pointer  flex-grow px-4 relative"
+              : "items-center space-x-4 min-h-[70px] bg-primaryColor  flex md:hidden cursor-pointer  flex-grow px-4 relative"
+          }
+        >
+          <FaThList />
+          <h1>Chats</h1>
         </div>
         <div className="flex items-center space-x-2">
           <BiMessageSquareAdd size={20} className="cursor-pointer" />
-          <BsThreeDotsVertical size={20} className="cursor-pointer" onClick={showMore}/>
+          <BsThreeDotsVertical
+            size={20}
+            className="cursor-pointer"
+            onClick={showMore}
+          />
         </div>
         {show && (
           <div
@@ -83,16 +121,16 @@ function Header() {
                  w-40 bg-gray-300 hover:bg-gray-100 rounded-md shadow-lg"
           >
             {isChatClicked && (
-            <div className="py-1">
-              <button
-                onClick={closeChat}
-                className=" px-4 py-2 text-gray-700   flex items-center w-full "
-              >
-                <AiOutlineClose className="mr-2" />
-                Close chat
-              </button>
-            </div>
-           )}
+              <div className="py-1">
+                <button
+                  onClick={closeChat}
+                  className=" px-4 py-2 text-gray-700   flex items-center w-full "
+                >
+                  <AiOutlineClose className="mr-2" />
+                  Close chat
+                </button>
+              </div>
+            )}
             <div className="py-1">
               <button
                 onClick={signOut}

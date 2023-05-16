@@ -6,7 +6,9 @@ const FirebaseAuthContext = createContext();
 
 export const FirebaseAuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isChatClicked,setIsChatClicked] = useState(true)
+  const [isChatClicked,setIsChatClicked] = useState(false)
+  const [isCreateChat,setIsCreateChat] = useState(false)
+  const [chatSelected,setChatSelected] = useState([]);
   const [showChats,setShowChats] = useState(false)
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -44,13 +46,24 @@ export const FirebaseAuthProvider = ({ children }) => {
   const openDrawer = ()=>{
     setShowChats(!showChats);
   }
+ 
   const signOut = async () => {
     try {
       await auth.signOut();
+      setIsChatClicked(false)
+      setChatSelected([])
       console.log("Signout");
     } catch (error) {
       console.log(error);
     }
+  };
+  const closeChat = () => {
+    setIsChatClicked(!isChatClicked);
+    setChatSelected([]);
+    setShow(!show);
+    
+    console.log("Chat Closed");
+    console.log(isChatClicked);
   };
 
   return (
@@ -62,7 +75,12 @@ export const FirebaseAuthProvider = ({ children }) => {
       setIsChatClicked,
       showChats,
       setShowChats,
-      openDrawer
+      openDrawer,
+      isCreateChat,
+      setIsCreateChat,
+      setChatSelected,
+      chatSelected,
+      closeChat,
       }}>
       {children}
     </FirebaseAuthContext.Provider>
