@@ -20,18 +20,11 @@ function Header() {
     isCreateChat,
     setIsCreateChat,
     setChatSelected,
-    closeChat
+    closeChat,
+    show,
+    showMore,
+    createChat
   } = useContext(FirebaseAuthContext);
-  const [show, setShow] = useState(false);
-
-  const showMore = () => {
-    setShow(!show);
-  };
- 
-  const createChat = () => {
-    setIsCreateChat(true);
-  };
-  console.log(isChatClicked.toString());
   return (
     <div className="flex items-center  ">
       {/* Left Header*/}
@@ -74,7 +67,7 @@ function Header() {
             {isChatClicked && (
               <div className="py-1">
                 <button
-                  onClick={()=>{closeChat}}
+                  onClick={closeChat}
                   className=" px-4 py-2 text-gray-700   flex items-center w-full "
                 >
                   <AiOutlineClose className="mr-2" />

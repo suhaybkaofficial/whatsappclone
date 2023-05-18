@@ -7,31 +7,8 @@ import FirebaseAuthContext from "@/utils/firebaseAuth";
 
 function Chats({ name }) {
   const [chats, setChats] = useState([]);
-  const { isChatClicked, setIsChatClicked, setChatSelected } =
+  const { isChatClicked, setIsChatClicked, setChatSelected, openChat, show } =
     useContext(FirebaseAuthContext);
-  const openChat = (
-    id,
-    chatName,
-    chatAvatar,
-    formattedCreatedAt,
-    displayName,
-    email,
-    photoURL,
-    userId
-  ) => {
-    const chatInfo = {
-      id,
-      chatName,
-      chatAvatar,
-      formattedCreatedAt,
-      displayName,
-      email,
-      photoURL,
-      userId,
-    };
-    setIsChatClicked(true);
-    setChatSelected(chatInfo);
-  };
   useEffect(() => {
     const collectionRef = collection(db, "chats");
     const q = query(collectionRef, orderBy("createdAt", "desc"));
@@ -54,8 +31,6 @@ function Chats({ name }) {
           };
         })
       );
-
-      console.log(chats);
     });
     return () => unsubscribe(); // Cleanup the snapshot listener
   }, []);
@@ -69,19 +44,21 @@ function Chats({ name }) {
               const { displayName, email, photoURL, userId } = user;
               return (
                 <div
-                  onClick={openChat(
-                    id,
-                    chatName,
-                    chatAvatar,
-                    formattedCreatedAt,
-                    displayName,
-                    email,
-                    photoURL,
-                    userId
-                  )}
+                  key={id}
+                  onClick={() =>
+                    openChat(
+                      id,
+                      chatName,
+                      chatAvatar,
+                      formattedCreatedAt,
+                      displayName,
+                      email,
+                      photoURL,
+                      userId
+                    )
+                  }
                 >
                   <ChatList
-                    key={id}
                     chatName={chatName}
                     message="Hi From "
                     chatAvatar={chatAvatar}

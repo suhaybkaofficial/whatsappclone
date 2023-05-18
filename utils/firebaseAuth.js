@@ -1,15 +1,17 @@
-import { createContext, useEffect, useState } from 'react';
-import firebase, { auth } from './firebase';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createContext, useEffect, useState } from "react";
+import firebase, { auth } from "./firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const FirebaseAuthContext = createContext();
 
 export const FirebaseAuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isChatClicked,setIsChatClicked] = useState(false)
-  const [isCreateChat,setIsCreateChat] = useState(false)
-  const [chatSelected,setChatSelected] = useState([]);
-  const [showChats,setShowChats] = useState(false)
+  const [isChatClicked, setIsChatClicked] = useState(false);
+  const [isCreateChat, setIsCreateChat] = useState(false);
+  const [chatSelected, setChatSelected] = useState([]);
+
+  const [show, setShow] = useState(false);
+  const [showChats, setShowChats] = useState(false);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
@@ -21,17 +23,18 @@ export const FirebaseAuthProvider = ({ children }) => {
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-    .then((result) => {
+      .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        let stringified = JSON.stringify(user)
+        let stringified = JSON.stringify(user);
         console.log(user);
-        setUser(user)
+        setUser(user);
         // setLoggedInUserId(user.uid);
         // let storeUserData = localStorage.setItem('userInfo', stringified);
         // ...
-    }).catch((error) => {
+      })
+      .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -41,17 +44,17 @@ export const FirebaseAuthProvider = ({ children }) => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
-    });
+      });
   };
-  const openDrawer = ()=>{
+  const openDrawer = () => {
     setShowChats(!showChats);
-  }
- 
+  };
+
   const signOut = async () => {
     try {
       await auth.signOut();
-      setIsChatClicked(false)
-      setChatSelected([])
+      setIsChatClicked(false);
+      setChatSelected([]);
       console.log("Signout");
     } catch (error) {
       console.log(error);
@@ -61,27 +64,66 @@ export const FirebaseAuthProvider = ({ children }) => {
     setIsChatClicked(!isChatClicked);
     setChatSelected([]);
     setShow(!show);
-    
+
     console.log("Chat Closed");
     console.log(isChatClicked);
   };
-
+  const openChat = (
+    id,
+    chatName,
+    chatAvatar,
+    formattedCreatedAt,
+    displayName,
+    email,
+    photoURL,
+    userId
+  ) => {
+    const chatInfo = {
+      id,
+      chatName,
+      chatAvatar,
+      formattedCreatedAt,
+      displayName,
+      email,
+      photoURL,
+      userId,
+    };
+    if (isChatClicked) {
+      setChatSelected(chatInfo);
+    }
+    else{
+      setIsChatClicked(!isChatClicked)
+      setChatSelected(chatInfo);
+    }
+  };
+  const showMore = () => {
+    setShow(!show);
+  };
+  const createChat = () => {
+    setIsCreateChat(true);
+  };
   return (
-    <FirebaseAuthContext.Provider value={{ 
-      user, 
-      signInWithGoogle, 
-      signOut,
-      isChatClicked,
-      setIsChatClicked,
-      showChats,
-      setShowChats,
-      openDrawer,
-      isCreateChat,
-      setIsCreateChat,
-      setChatSelected,
-      chatSelected,
-      closeChat,
-      }}>
+    <FirebaseAuthContext.Provider
+      value={{
+        user,
+        signInWithGoogle,
+        signOut,
+        isChatClicked,
+        setIsChatClicked,
+        showChats,
+        setShowChats,
+        openDrawer,
+        isCreateChat,
+        setIsCreateChat,
+        setChatSelected,
+        chatSelected,
+        closeChat,
+        openChat,
+        show,
+        showMore,
+        createChat,
+      }}
+    >
       {children}
     </FirebaseAuthContext.Provider>
   );
