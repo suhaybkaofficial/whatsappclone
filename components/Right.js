@@ -15,7 +15,7 @@ function Right() {
           <div className="flex items-center justify-center h-full bg-primaryColor relative ">
             <div className="flex items-center justify-center flex-col">
               <Image
-                src="/images/background2.jpg"
+                src="/images/background2.JPG"
                 className="object-cover h-72"
                 width={400}
                 height={400}
