@@ -25,7 +25,7 @@ function Home() {
               </div>
               {!isCreateChat ? (
                 <>
-                  <div className="flex-[3_3_0%]  overflow-y-auto">
+                  <div className="flex-[3_3_0%]">
                     <Right />
                   </div>
                 </>

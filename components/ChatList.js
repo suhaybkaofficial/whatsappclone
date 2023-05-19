@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
-function ChatList({message,chatName,messageCount,time,chatAvatar}) {
+import FirebaseAuthContext from '@/utils/firebaseAuth';
+function ChatList({message,chatName,messageCount,time,chatAvatar,id}) {
+
   return (
     <div className='flex items-center justify-between my-4 cursor-pointer border-b border-gray-700'>
     <div className='flex items-center pb-4'>
@@ -17,7 +19,7 @@ function ChatList({message,chatName,messageCount,time,chatAvatar}) {
     {/* Contact & Message */}
     <div className='space-y-1'>
         <h3 className="text-whiteColor">{chatName}</h3>
-        <p className="text-[#8696a0] text-xs">{message} from {chatName}</p>
+        <p className="text-[#8696a0] text-xs">{message.substring(0, 15) + "..."}</p>
     </div>
     </div>
     {/* Time & Message Count */}

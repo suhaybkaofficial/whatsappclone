@@ -60,7 +60,8 @@ function Chats({ name }) {
                 >
                   <ChatList
                     chatName={chatName}
-                    message="Hi From "
+                    message="1st Message"
+                    id={id}
                     chatAvatar={chatAvatar}
                     messageCount="3"
                     time={moment(formattedCreatedAt).fromNow()}

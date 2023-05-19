@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import firebase, { auth } from "./firebase";
+import firebase, { auth, db } from "./firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { addDoc, collection, getDocs, query, serverTimestamp, where } from "firebase/firestore";
 
 const FirebaseAuthContext = createContext();
 
@@ -88,6 +89,29 @@ export const FirebaseAuthProvider = ({ children }) => {
       photoURL,
       userId,
     };
+    const joinChat = async (chatInfo) =>{
+      const colRef = collection(db, "chats",id,"participants");
+      const q = query(colRef,where("userId","==",user.uid))
+      const querySnapshot = await getDocs(q);
+     if(querySnapshot.empty === true){
+      const data = {
+        userId:user.uid,
+        displayName:user.displayName,
+        joinedAt:serverTimestamp(),
+        role:"Member"
+      };
+       const colRef = collection(db, "chats",id,"participants");
+              addDoc(colRef, data)
+            .then(docRef => {
+
+            })
+            .catch(error => {
+              console.log(error);
+            })
+     }
+     
+    }
+    joinChat()
     if (isChatClicked) {
       setChatSelected(chatInfo);
     }

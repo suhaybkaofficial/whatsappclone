@@ -50,9 +50,25 @@ function CreateChat() {
             const colRef = collection(db, "chats");
             addDoc(colRef, data)
               .then((docRef) => {
-                setIsCreateChat(false);
-                setChatName("");
-                setLoading(false);
+                console.log(docRef);
+                const data1 = {
+                  userId:user.uid,
+                  displayName:user.displayName,
+                  joinedAt:serverTimestamp(),
+                  role:"Admin"
+                };
+                const colRef1 = collection(db, "chats",docRef.id, "participants"); 
+              
+                addDoc(colRef1, data1)
+                  .then((newDocRef) => {
+                    console.log(newDocRef);
+                    setIsCreateChat(false);
+                    setChatName("");
+                    setLoading(false);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
               })
               .catch((error) => {
                 console.log(error);
@@ -104,7 +120,7 @@ function CreateChat() {
               id="chatName"
               className="border-b-2 text-sm rounded-lg text-gray-800 focus:ring-gray-500 outline-0 focus:border-gray-200 block w-full p-2.5 "
               placeholder="Chat Name (Not more than 12 characters)"
-              maxLength={12}
+              maxLength={15}
               required
               value={chatName}
               onChange={(e) => setChatName(e.target.value)}

@@ -4,6 +4,7 @@ import styles from "../public/customStyles/styles.css";
 import Image from "next/image";
 import { AiFillLock } from "react-icons/ai";
 import FirebaseAuthContext from "@/utils/firebaseAuth";
+import Messages from "./Messages";
 function Right() {
   const { isChatClicked,chatSelected } = useContext(FirebaseAuthContext);
 
@@ -36,30 +37,7 @@ function Right() {
         </>
       ) : (
         <>
-          <div className="min-h-screen mt-[75px]" style={styles.body}>
-            <br />
-            {/* Messages */}
-            <div className="px-12 my-4 ">
-             {/* Other Messages */}
-             <div className="flex justify-start">
-               <div className="bg-primaryColor max-w-fit py-1 px-2 rounded-lg  my-4 ">
-                <p className="text-white text-left whitespace-normal break-words px-4 py-4  ">
-                  {chatSelected.chatName}
-                </p>
-              </div>
-              </div>
-              {/* My Messages */}
-              <div className="flex justify-end">
-              <div className="bg-thirdColor max-w-fit py-1 px-2 rounded-lg my-4 text-center ">
-                <p className="text-white  whitespace-normal break-words px-4 py-4 ">
-                  I'm fine bro
-                </p>
-              </div>
-              </div>
-
-
-            </div>
-          </div>
+         <Messages />
         </>
       )}
     </>

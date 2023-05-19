@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BiMessageSquareAdd } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Image from "next/image";
@@ -8,6 +8,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
 import { HiOutlineUsers } from "react-icons/hi";
 import FirebaseAuthContext from "@/utils/firebaseAuth";
+import { collection, getCountFromServer } from "firebase/firestore";
+import { db } from "@/utils/firebase";
 function Header() {
   const {
     signOut,
@@ -23,8 +25,22 @@ function Header() {
     closeChat,
     show,
     showMore,
-    createChat
+    createChat,
+    chatSelected,
   } = useContext(FirebaseAuthContext);
+  const [totalParticipants, setTotalParticipants] = useState(0);
+  useEffect(() => {
+    if (chatSelected.id) {
+      let chatId = chatSelected.id;
+      const getCollectionSize = async () => {
+        const colRef = collection(db, "chats", chatId, "participants");
+        const snapshot = await getCountFromServer(colRef);
+        setTotalParticipants(snapshot.data().count);
+      };
+
+      getCollectionSize();
+    }
+  }, [chatSelected]);
   return (
     <div className="flex items-center  ">
       {/* Left Header*/}
@@ -49,9 +65,13 @@ function Header() {
             <BiMessageSquareAdd size={20} className="cursor-pointer" />
           </button>
           {isChatClicked && (
-            <button>
-              <HiOutlineUsers />
-            </button>
+            <div className="flex items-center space-x-1">
+              <button>
+                <HiOutlineUsers />
+              </button>
+
+              <p>{totalParticipants}</p>
+            </div>
           )}
           <BsThreeDotsVertical
             size={20}
