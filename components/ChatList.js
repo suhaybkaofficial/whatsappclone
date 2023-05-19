@@ -13,23 +13,23 @@ function ChatList({message,chatName,messageCount,time,chatAvatar,id}) {
         className="object-cover h-12 w-12 rounded-full"
         width={50}
         height={50}
-        alt="Picture of the author"
+        alt="Chat Avatar"
       />
     </div>
     {/* Contact & Message */}
     <div className='space-y-1'>
         <h3 className="text-whiteColor">{chatName}</h3>
-        <p className="text-[#8696a0] text-xs">{message.substring(0, 15) + "..."}</p>
+        <p className="text-[#8696a0] text-xs">Created {time}</p>
     </div>
     </div>
     {/* Time & Message Count */}
     <div className='flex flex-col space-y-1'>
         {/* Time */}
-        <h3 className="text-[#8696a0] text-sm">{time}</h3>
+        {/* <h3 className="text-[#8696a0] text-sm">{time}</h3> */}
         {/* Message Count */}
-        <div className='bg-thirdColor h-6 w-6 rounded-full flex items-center justify-center self-end'>
+        {/* <div className='bg-thirdColor h-6 w-6 rounded-full flex items-center justify-center self-end'>
             <p className="text-xs text-greyColor">{messageCount}</p>
-        </div>
+        </div> */}
     </div>
     </div>
   )

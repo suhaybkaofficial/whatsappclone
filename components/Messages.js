@@ -104,7 +104,11 @@ function Messages() {
                           <p className="text-white text-left whitespace-normal break-words px-4 py-4  ">
                             {message.message}
                           </p>
+                          <p className="text-gray-300 text-xs">
+                            {moment(message.formattedSendAt).fromNow()}
+                          </p>
                         </div>
+                        
                       </div>
                     </>
                   ) : (
@@ -122,10 +126,17 @@ function Messages() {
                             />
                             
                           </div>
+                          <div> 
                           <p className="text-white  whitespace-normal break-words px-4 py-4 ">
                             {message.message}
                           </p>
+                          
+                          </div>
+                          <p className="text-gray-300 text-xs">
+                            {moment(message.formattedSendAt).fromNow()}
+                          </p>
                         </div>
+                        
                       </div>
                     </>
                   )}
