@@ -7,7 +7,7 @@ import FirebaseAuthContext from "@/utils/firebaseAuth";
 
 function Chats({ name }) {
   const [chats, setChats] = useState([]);
-  const { isChatClicked, setIsChatClicked, setChatSelected, openChat, show } =
+  const { isChatClicked, setIsChatClicked, setChatSelected,chatSelected, openChat, show } =
     useContext(FirebaseAuthContext);
   useEffect(() => {
     const collectionRef = collection(db, "chats");
@@ -35,7 +35,7 @@ function Chats({ name }) {
     return () => unsubscribe(); // Cleanup the snapshot listener
   }, []);
   return (
-    <div className="mx-4 " id="sidebar">
+    <div className="mx-4 max-h-fit " id="sidebar">
       {/* Chat */}
       {chats.length > 0 ? (
         <>
@@ -44,6 +44,8 @@ function Chats({ name }) {
               const { displayName, email, photoURL, userId } = user;
               return (
                 <div
+                
+                className={chatSelected.id === id ? "bg-[#212e35] px-1 rounded-lg":" px-1 rounded-lg"}
                   key={id}
                   onClick={() =>
                     openChat(

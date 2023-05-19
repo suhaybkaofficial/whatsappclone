@@ -61,6 +61,7 @@ function Header() {
           isChatClicked
         } */}
         <div className="flex items-center space-x-6">
+        <h1 className="font-extrabold">{chatSelected.chatName} Chat</h1>
           <button onClick={createChat}>
             <BiMessageSquareAdd size={20} className="cursor-pointer" />
           </button>
@@ -121,12 +122,23 @@ function Header() {
           <h1>Chats</h1>
         </div>
         <div className="flex items-center space-x-2">
+          <h1 className="font-extrabold">{chatSelected.chatName} Chat</h1>
           <BiMessageSquareAdd size={20} className="cursor-pointer" />
+          {isChatClicked && (
+            <div className="flex items-center space-x-1">
+              <button>
+                <HiOutlineUsers />
+              </button>
+
+              <p>{totalParticipants}</p>
+            </div>
+          )}
           <BsThreeDotsVertical
             size={20}
             className="cursor-pointer"
             onClick={showMore}
           />
+
         </div>
         {show && (
           <div

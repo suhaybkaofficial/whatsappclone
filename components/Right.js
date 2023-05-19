@@ -24,7 +24,7 @@ function Right() {
               <div className="flex flex-col items-center justify-center space-y-4">
                 <h1 className="text-4xl font-thin">Whatsapp Web</h1>
                 <p className="text-gray-400 text-sm tracking-wide">
-                  Send and receive messages without keeping your phone online.
+                  Send and receive messages in real-time.
                 </p>
                 <div className="flex items-center space-x-2 text-xs text-gray-500">
                   <AiFillLock />

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import FirebaseAuthContext from '@/utils/firebaseAuth';
 function ChatList({message,chatName,messageCount,time,chatAvatar,id}) {
-
+  const {chatSelected} = useContext(FirebaseAuthContext)
   return (
     <div className='flex items-center justify-between my-4 cursor-pointer border-b border-gray-700'>
     <div className='flex items-center pb-4'>

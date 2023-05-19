@@ -5,7 +5,7 @@ import Chats from "./Chats";
 
 function Left() {
   return (
-    <div className="h-full bg-greyColor border-r border-r-gray-700 relative">
+    <div className="min-h-full bg-greyColor border-r border-r-gray-700 relative">
       <br />
       <br />
       <br />
